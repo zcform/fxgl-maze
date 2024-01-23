@@ -68,7 +68,7 @@ public class ZcApplication extends GameApplication {
             }
         }, KeyCode.R);
 
-        onKey(KeyCode.Q, () -> createSE());
+        onKeyUp(KeyCode.Q, () -> createSE());
 
         getInput().addAction(new UserAction("PRIMARY") {
             @Override
