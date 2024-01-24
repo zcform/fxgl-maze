@@ -42,7 +42,6 @@ public class PlayerComponent extends Component {
         double ds = .8;
 
         Image image = image("bug.png", min * 8, min * 8);
-        animS = new AnimationChannel(image, 8, (int) min, (int) min, Duration.seconds(1), 6 * 8, 6 * 8);
         animL = new AnimationChannel(image, 8, (int) min, (int) min, Duration.seconds(ds), 0 * 8, 0 * 8 + 7);
         animR = new AnimationChannel(image, 8, (int) min, (int) min, Duration.seconds(ds), 4 * 8, 4 * 8 + 7);
         animU = new AnimationChannel(image, 8, (int) min, (int) min, Duration.seconds(ds), 2 * 8, 2 * 8 + 7);
