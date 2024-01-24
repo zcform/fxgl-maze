@@ -67,6 +67,8 @@ public class MazeMapComponent extends Component {
             double x = cell.getX() * cellWidth;
             double y = cell.getY() * cellHeight;
 
+            //writeLine(g, x, y, x + cellWidth, y, Color.GRAY);
+
             if (cell.hasTopWall()) {
                 writeLine(g, x, y, x + cellWidth, y, Color.GOLD);
             }

@@ -1,5 +1,5 @@
 package com.zc.view;
 
 public enum EntityType {
-    PATH, S_CELL, E_CELL
+    PLAYER,PATH, S_CELL, E_CELL
 }
