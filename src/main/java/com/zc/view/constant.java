@@ -5,16 +5,18 @@ package com.zc.view;
  * zhangxl
  */
 public class constant {
-    public static int leftIntr = 6;
-    public static int topIntr = 6;
-    public static int describeIntr = 66;
+    public static int leftIntr = 10;
+    public static int bottomIntr = 6;
+    public static int topIntr = 40 + bottomIntr;
 
-    public static int w_num = 30;
-    public static int h_num = 20;
+    public static int w_num = 16;
+    public static int h_num = 10;
 
-    public static int cellWidth = 10;
+    public static int cellWidth = 15;
     public static int cellHeight = cellWidth;
 
-    public static double WIDTH = w_num * cellWidth + leftIntr * 2 + describeIntr;
-    public static double HEIGHT = h_num * cellWidth + topIntr * 2;
+    public static double WIDTH = w_num * cellWidth + leftIntr * 2;
+    public static double HEIGHT = h_num * cellHeight + topIntr + bottomIntr;
+
+    public static int bugSpeed = 160;
 }

@@ -63,9 +63,11 @@ public class PlayerComponent extends Component {
     }
 
     public void move(List<MazeCell> path) {
-        List<Point2D> point2DS = path.stream().map(p -> new Point2D(p.getX() * cellWidth + leftIntr, p.getY() * cellHeight + topIntr)).collect(Collectors.toList());
+        List<Point2D> point2DS = path.stream()
+                .map(p -> new Point2D(p.getX() * cellWidth + leftIntr, p.getY() * cellHeight + topIntr))
+                .collect(Collectors.toList());
 
-        moveComponent.setSpeed(100);
+        moveComponent.setSpeed(bugSpeed);
         moveComponent.move(point2DS);
     }
 

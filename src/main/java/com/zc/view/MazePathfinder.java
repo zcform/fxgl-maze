@@ -1,14 +1,12 @@
 package com.zc.view;
 
 import com.almasb.fxgl.pathfinding.Pathfinder;
-import com.almasb.fxgl.pathfinding.astar.AStarCell;
 import com.almasb.fxgl.pathfinding.maze.Maze;
 import com.almasb.fxgl.pathfinding.maze.MazeCell;
 
 import java.util.*;
 
 public final class MazePathfinder implements Pathfinder<MazeCell> {
-
     private final Maze maze;
 
     public MazePathfinder(Maze maze) {
@@ -70,6 +68,8 @@ public final class MazePathfinder implements Pathfinder<MazeCell> {
             path.add(tmp);
             tmp = (MazeCell) tmp.getUserData();
         } while (tmp != start);
+
+        path.add(start);
 
         Collections.reverse(path);
         return path;

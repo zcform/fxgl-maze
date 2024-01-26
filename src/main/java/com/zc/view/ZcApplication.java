@@ -3,12 +3,12 @@ package com.zc.view;
 import cn.hutool.core.collection.CollUtil;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.dsl.FXGLForKtKt;
-import com.almasb.fxgl.dsl.components.WaypointMoveComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.pathfinding.maze.Maze;
 import com.almasb.fxgl.pathfinding.maze.MazeCell;
 import com.almasb.fxgl.time.LocalTimer;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -32,7 +32,6 @@ public class ZcApplication extends GameApplication {
 
     private Entity player;
     private PlayerComponent playerComponent;
-    private WaypointMoveComponent waypointMoveComponent;
 
     private LocalTimer intrTimer;
 
@@ -115,13 +114,22 @@ public class ZcApplication extends GameApplication {
         MazeCell scell = map.getRandomCell();
         MazeCell ecell = map.getRandomCell();
 
-        se = spawn("scell", scell.getX() * cellWidth, scell.getY() * cellHeight);
-        ee = spawn("ecell", ecell.getX() * cellWidth, ecell.getY() * cellHeight);
+        while (scell.distance(ecell) == 0) {
+            ecell = map.getRandomCell();
+        }
 
-        player = spawn("player", scell.getX() * cellWidth, scell.getY() * cellHeight);
+        Point2D sep = new Point2D(scell.getX() * cellWidth, scell.getY() * cellHeight);
+        Point2D eep = new Point2D(ecell.getX() * cellWidth, ecell.getY() * cellHeight);
+
+        se = spawn("scell", new SpawnData(sep).put("cell", scell));
+        ee = spawn("ecell", new SpawnData(eep).put("cell", ecell));
+        player = spawn("player", new SpawnData(sep).put("cell", scell));
+
+        //se = spawn("scell", 0 * cellWidth, 0 * cellHeight);
+        //ee = spawn("ecell", (w_num - 1) * cellWidth, (h_num - 1) * cellHeight);
+        //player = spawn("player", 0 * cellWidth, 0 * cellHeight);
 
         playerComponent = player.getComponent(PlayerComponent.class);
-        waypointMoveComponent = player.getComponent(WaypointMoveComponent.class);
     }
 
     private boolean notRefresh() {
@@ -131,13 +139,10 @@ public class ZcApplication extends GameApplication {
     private void findPath() {
         if (se.distance(player) != 0) return;
 
-        int sx = (int) (se.getX() / cellWidth);
-        int sy = (int) (se.getY() / cellHeight);
+        MazeCell so = (MazeCell) se.getPropertyOptional("cell").get();
+        MazeCell eo = (MazeCell) ee.getPropertyOptional("cell").get();
 
-        int ex = (int) (ee.getX() / cellWidth);
-        int ey = (int) (ee.getY() / cellHeight);
-
-        path = pathfinder.findPath(sx, sy, ex, ey);
+        path = pathfinder.findPath(so.getX(), so.getY(), eo.getX(), eo.getY());
 
         playerComponent.move(new ArrayList<>(path));
     }
@@ -150,7 +155,7 @@ public class ZcApplication extends GameApplication {
             double px = remove.getX() * cellWidth;
             double py = remove.getY() * cellHeight;
 
-            spawn("pcell", px, py);
+            spawn("pcell", new SpawnData(px, py).put("cell", remove));
 
             intrTimer.capture();
         }
@@ -158,16 +163,16 @@ public class ZcApplication extends GameApplication {
 
     @Override
     protected void initUI() {
-        double x = getAppWidth() - describeIntr + leftIntr;
-
-        Line line = new Line(x, 0, x, FXGLForKtKt.getAppHeight());
+        Line line = new Line(0, topIntr - bottomIntr, getAppWidth(), topIntr - bottomIntr);
         line.setStrokeWidth(3);
         line.setStroke(Color.GOLD);
         line.setOpacity(.4);
 
-        Button bt_maze = getButton(x, 30, "maze");
-        Button bt_se = getButton(x, bt_maze.getTranslateY() + 22 + 16, "S-E");
-        Button bt_path = getButton(x, bt_se.getTranslateY() + 22 + 16, "path");
+        double w2 = getAppWidth() / 2;
+
+        Button bt_maze = getButton(w2 - 22, (topIntr - bottomIntr - 22) / 2, "maze");
+        Button bt_se = getButton(w2 - 22 - 15 - 42, (topIntr - bottomIntr - 22) / 2, "S-E");
+        Button bt_path = getButton(w2 + 22 + 15, (topIntr - bottomIntr - 22) / 2, "path");
 
         bt_maze.setOnMouseClicked(e -> refreshMaze());
         bt_se.setOnMouseClicked(e -> refreshSE());
@@ -187,7 +192,7 @@ public class ZcApplication extends GameApplication {
         button.setMaxWidth(42);
         button.setMinHeight(22);
         button.setMaxHeight(22);
-        button.setTranslateX((getAppWidth() - x) / 2 - 21 + x);
+        button.setTranslateX(x);
         button.setTranslateY(y);
 
         return button;
