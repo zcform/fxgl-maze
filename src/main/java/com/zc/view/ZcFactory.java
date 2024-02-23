@@ -6,6 +6,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.zc.maze.MazeMapComponent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -25,7 +26,7 @@ public class ZcFactory implements EntityFactory {
     public Entity maze(SpawnData data) {
         return entityBuilder()
                 .at(leftIntr, topIntr)
-                .with(new MazeMapComponent(w_num, h_num, cellWidth, cellHeight))
+                .with(new MazeMapComponent(w_num, h_num, cellWidth, cellHeight, Color.GOLD))
                 .zIndex(10)
                 .opacity(.8)
                 .neverUpdated()

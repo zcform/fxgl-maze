@@ -8,6 +8,8 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.pathfinding.maze.Maze;
 import com.almasb.fxgl.pathfinding.maze.MazeCell;
 import com.almasb.fxgl.time.LocalTimer;
+import com.zc.maze.MazeMapComponent;
+import com.zc.maze.MazePathfinder;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
@@ -43,7 +45,7 @@ public class ZcApplication extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setTitle(" ");
+        settings.setTitle("maze");
         settings.setVersion(" ");
         settings.setAppIcon("zc.png");
         settings.setWidth((int) WIDTH + 1);
@@ -53,26 +55,6 @@ public class ZcApplication extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("num", 0);
-    }
-
-    @Override
-    protected void initInput() {
-        //getInput().addAction(new UserAction("R") {
-        //    @Override
-        //    protected void onActionEnd() {
-        //        refreshMaze();
-        //    }
-        //}, KeyCode.R);
-        //
-        //onKeyUp(KeyCode.Q, () -> createSE());
-        //
-        //getInput().addAction(new UserAction("PRIMARY") {
-        //    @Override
-        //    protected void onActionEnd() {
-        //        Point2D point2D = getInput().getMousePositionWorld();
-        //        findPath();
-        //    }
-        //}, MouseButton.PRIMARY);
     }
 
     @Override

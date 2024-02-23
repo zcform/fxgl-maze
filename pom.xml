@@ -18,15 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.almasb</groupId>
-            <artifactId>fxgl</artifactId>
-            <version>17.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.7.19</version>
+            <groupId>com.zc</groupId>
+            <artifactId>fxgl-zc</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
